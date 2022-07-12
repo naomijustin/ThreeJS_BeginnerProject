@@ -9,10 +9,37 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/102/three.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TweenMax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/102/three.js"></script> <!-- Three JS CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TweenMax.min.js"></script> <!-- Animation Plugin -->
     
-    
+    <script>
+        var scene = new THREE.Scene();
+        
+        var camera = new THREE.PerspectiveCamera(
+            75, // Field of view
+            window.innerWidth/window.innerHeight, // Aspect Ratio (divided)
+            0.1, // Near Plane
+            1000 // Far Plane
+        );
+
+        var renderer = new THREE.WebGLRenderer({antialias: true}); // Antialias makes result smooth
+        renderer.setClearColor("#E5E5E5");
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        document.body.appendChild(renderer.domElement);
+        
+        // === Responsive ===
+        window.addEventListener('resize', function(){
+            renderer.setSize(window.innerWidth, window.innerHeight); // Responsive Canvas Size
+            camera.aspect = window.innerWidth / window.innerHeight; // Responsive Camera Aspect Ratio
+
+            camera.updateProjectMatrix();
+        });
+
+        // Render
+        renderer.render(scene, camera);
+
+    </script>
 </body>
 </html>
 
