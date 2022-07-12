@@ -21,6 +21,7 @@
             0.1, // Near Plane
             1000 // Far Plane
         );
+        camera.position.z = 5;
 
         var renderer = new THREE.WebGLRenderer({antialias: true}); // Antialias makes result smooth
         renderer.setClearColor("#E5E5E5");
@@ -33,11 +34,32 @@
             renderer.setSize(window.innerWidth, window.innerHeight); // Responsive Canvas Size
             camera.aspect = window.innerWidth / window.innerHeight; // Responsive Camera Aspect Ratio
 
-            camera.updateProjectMatrix();
+            camera.updateProjectionMatrix();
         });
 
-        // Render
-        renderer.render(scene, camera);
+
+        // Create Shape
+        var geometry = new THREE.BoxGeometry(1, 1, 1); 
+        var material = new THREE.MeshLambertMaterial({color: 0xFFCC00});
+        var mesh = new THREE.Mesh(geometry, material);
+
+        mesh.position.x = 2;
+
+        scene.add(mesh);
+
+        var light = new THREE.PointLight(0xFFFFFF, 1, 500);
+        light.position.set(10, 0, 25);
+        scene.add(light);
+
+        // Render Function fixes aspect ratio of objects in view
+        var render = function() {
+            requestAnimationFrame(render);
+            renderer.render(scene, camera);    
+        }
+
+        render();
+
+        
 
     </script>
 </body>
